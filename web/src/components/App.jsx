@@ -33,13 +33,42 @@ const App = () => {
   Se ejecuta cuando allMoviesOptionGenre o allMoviesOptionSort cambian de valor.
   Como queremos que el back devuelva las películas filtradas por género y ordenadas por nombre estamos pasando a getMoviesFromApi estos dos valores.
   */
-  useEffect(() => {
+  /*useEffect(() => {
     const params = {
       genre: allMoviesOptionGenre,
       sort: allMoviesOptionSort,
     };
     apiMovies.getMoviesFromApi(params).then((response) => {
       setAppMovies(response.movies);
+    });
+  }, [allMoviesOptionGenre, allMoviesOptionSort]); */
+
+  useEffect(() => {
+    const params = {
+      genre: allMoviesOptionGenre,
+      sort: allMoviesOptionSort,
+    };
+    apiMovies.getMoviesFromApi(params).then((response) => {
+      // Filtrar las películas por género si hay un género seleccionado
+      let filteredMovies = response.movies;
+
+      if (allMoviesOptionGenre) {
+        filteredMovies = filteredMovies.filter(
+          (movie) => movie.genre === allMoviesOptionGenre
+        );
+      }
+
+      // Ordenar las películas (A-Z o Z-A)
+      filteredMovies.sort((a, b) => {
+        if (allMoviesOptionSort === "asc") {
+          return a.title.localeCompare(b.title);
+        } else {
+          return b.title.localeCompare(a.title);
+        }
+      });
+
+      // Actualizar el estado de las películas con las filtradas y ordenadas
+      setAppMovies(filteredMovies);
     });
   }, [allMoviesOptionGenre, allMoviesOptionSort]);
 

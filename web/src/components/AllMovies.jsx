@@ -8,13 +8,19 @@ const AllMovies = ({
   allMoviesOptionSort,
   movies,
 }) => {
-  const handleOptions = (ev) => {
+ /* const handleOptions = (ev) => {
     handleAllMoviesOptions({
       value: ev.target.value,
       key: ev.target.name,
     });
+  };*/
+  const handleOptions = ({ target: { value, name } }) => {
+    handleAllMoviesOptions({ value, key: name });
+    console.log(handleOptions, 'pelicula seleccionada')
   };
 
+  const genres = ["", "Drama", "Comedia"];
+  
   return (
     <section className="border--medium">
       <h1 className="title--medium">
@@ -30,9 +36,11 @@ const AllMovies = ({
             value={allMoviesOptionGenre}
             onChange={handleOptions}
           >
-            <option value="">Todas</option>
-            <option value="Drama">Drama</option>
-            <option value="Comedia">Comedia</option>
+          {genres.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre || "Todas"}
+            </option>
+          ))}
           </select>
         </div>
 
