@@ -8,19 +8,19 @@ Si queremos cambiar de rutas en función de un dato necesitamos hacerlo a travé
 del window.location https://developer.mozilla.org/es/docs/Web/API/Window/location
 
 */
-const redirect = (path) => {
+const redirect = path => {
   // cambiar la ruta actual
   window.location.replace(`#${path}`);
 };
 
-const reload = (path) => {
+const reload = path => {
   // refrescar la página
   window.location.reload();
 };
 
 const objToExport = {
   redirect: redirect,
-  reload: reload,
+  reload: reload
 };
 
 export default objToExport;
