@@ -1,5 +1,31 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import mysql from 'mysql2';
+
+// Obtener __dirname en ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Configurar conexión a la base de datos
+const connection = await mysql.createConnection({
+  host: "127.0.0.1", 
+  port: 3306,
+  user: "root",      
+  password: "29051996",    
+  database: "netflix", 
+});
+await connection.connect();
+
+// Conectar a la BD
+connection.connect((error) => {
+  if (error) {
+    console.error("Error al conectar a la BD:", error);
+  } else {
+    console.log("Conectado a la base de datos ✅");
+  }
+});
 
 // create and config server
 const server = express();
@@ -42,4 +68,6 @@ server.get("/movies", (req, res) => {
   });
 });
 
-
+// Servidor de archivos estáticos desde 'public-react'
+const staticServerPath = path.join(__dirname, "./public-react");
+server.use(express.static(staticServerPath));
