@@ -16,7 +16,7 @@ const connection = await mysql.createConnection({
   password: "29051996",    
   database: "netflix", 
 });
-await connection.connect();
+await connection.promise().connect();
 
 // Conectar a la BD
 connection.connect((error) => {
@@ -31,6 +31,8 @@ connection.connect((error) => {
 const server = express();
 server.use(cors());
 server.use(express.json());
+
+
 
 // init express aplication
 const serverPort = 4000;
@@ -71,3 +73,6 @@ server.get("/movies", (req, res) => {
 // Servidor de archivos estáticos desde 'public-react'
 const staticServerPath = path.join(__dirname, "./public-react");
 server.use(express.static(staticServerPath));
+
+const movieImagesPath = path.join(__dirname, "./public-movies-images"); 
+server.use("/public-movies-images", express.static(movieImagesPath));
