@@ -13,7 +13,7 @@ const connection = await mysql.createConnection({
   host: "127.0.0.1", 
   port: 3306,
   user: "root",      
-  password: "29051996",    
+  password: "",    
   database: "netflix", 
 });
 await connection.promise().connect();
@@ -74,5 +74,10 @@ server.get("/movies", (req, res) => {
 const staticServerPath = path.join(__dirname, "./public-react");
 server.use(express.static(staticServerPath));
 
-const movieImagesPath = path.join(__dirname, "./public-movies-images"); 
+const movieImagesPath = path.join(__dirname, "./public-movies-images");
 server.use("/public-movies-images", express.static(movieImagesPath));
+// server.use(express.static(path.join(__dirname, "public-movies-images"))); 
+
+
+
+
